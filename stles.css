@@ -1,0 +1,306 @@
+/* Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Body styling with static background */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #1e1e1e, #333);  /* Default Dark mode gradient */
+    color: white;
+    overflow: hidden;
+    transition: background 0.5s ease, color 0.5s ease;
+}
+
+/* Light Mode specific styles */
+body.light-mode {
+    background: linear-gradient(135deg, #fff, #e0e0e0); /* Light mode background */
+    color: #333; /* Dark text for light mode */
+}
+
+/* Dark Mode specific styles */
+body.dark-mode {
+    background: linear-gradient(135deg, #2a2a2a, #444); /* Dark mode background */
+    color: white; /* Text color for dark mode */
+}
+
+/* Flashcard Container */
+.flashcard-container {
+    text-align: center;
+    width: 90%;
+    max-width: 700px;
+    padding: 20px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+/* Research Title */
+.research-title h2 {
+    font-size: 1.4rem;
+    margin-bottom: 30px;
+    color: #FFB800; /* Softer yellow */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Progress Bar */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+.progress {
+    height: 100%;
+    background: #FFB800;  /* Softer yellow */
+    width: 0%;
+    transition: width 0.5s ease;
+}
+
+/* Flashcard Design with Flip Effect */
+.flashcard {
+    width: 100%;
+    height: 300px;
+    perspective: 1500px;
+    margin: 0 auto;
+    opacity: 0; /* Initially hidden */
+    transform: scale(0.9);
+    transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.flashcard.is-flipped .card-front {
+    transform: rotateY(-180deg);
+}
+
+.flashcard.is-flipped .card-back {
+    transform: rotateY(0deg);
+}
+
+.card-front, .card-back {
+    width: 100%;
+    height: 100%;
+    background: #444;  /* Darker background for cards */
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    backface-visibility: hidden;
+    position: absolute;
+    transition: transform 0.6s ease;
+}
+
+.card-front {
+    transform: rotateY(0deg);
+}
+
+.card-back {
+    transform: rotateY(180deg);
+}
+
+/* Modify the card label positioning */
+.card-front p .card-label, .card-back p .card-label {
+    display: block;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 10px; /* Add space between label and content */
+    text-align: center; /* Center the label */
+    color: #FFB800; /* Softer yellow color */
+}
+
+/* Ensure Question and Answer are aligned properly */
+.card-front p, .card-back p {
+    display: flex;
+    flex-direction: column; /* Stack the label and content */
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    padding: 20px;
+    height: 100%; /* Ensure the card takes up full height */
+}
+
+/* Button Styling */
+button {
+    padding: 15px 30px;
+    background: #FFB800; /* Softer yellow */
+    color: #333;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    z-index: 1;
+    margin: 0 10px;
+}
+
+button:hover {
+    background: #e69a00; /* Muted hover effect */
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+    background: #d18a00;
+    transform: translateY(2px);
+}
+
+/* Button Group (Centering and Spacing the buttons) */
+.controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* More space between the card and buttons */
+    gap: 15px; /* Adds space between each button */
+}
+
+/* Dark Mode Toggle Button */
+.dark-mode-toggle {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.dark-mode-toggle button {
+    background: transparent;
+    color: #FFB800; /* Softer yellow */
+    font-size: 1.5rem;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    animation: zoomInOut 2s infinite ease-in-out; /* Continuous zoom in and out */
+}
+
+@keyframes zoomInOut {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.3); /* Zoom in */
+    }
+    100% {
+        transform: scale(1); /* Zoom out */
+    }
+}
+
+.dark-mode-toggle button:hover {
+    transform: scale(1.2); /* Additional zoom when hovered */
+}
+
+/* Card Reveal Animation (Question and Answer Sliding) */
+.card-front p, .card-back p {
+    max-width: 90%;
+    text-align: center;
+    margin: 0;
+    opacity: 0;
+}
+
+.card-front p {
+    animation: fadeInLeft 1s forwards;
+}
+
+.card-back p {
+    animation: fadeInRight 1s forwards;
+}
+
+@keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Progress bar animation */
+.flashcard-container.show-card .progress {
+    width: 100%;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    /* Flashcard Title */
+    .research-title h2 {
+        font-size: 1.2rem; /* Smaller title on mobile */
+    }
+
+    /* Flashcard */
+    .flashcard {
+        height: 250px; /* Slightly smaller height for mobile */
+    }
+
+    /* Font Size Adjustments */
+    .card-front p, .card-back p {
+        font-size: 1.2rem; /* Smaller text for mobile */
+    }
+
+    /* Buttons */
+    button {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+
+    /* Button spacing */
+    .controls {
+        flex-direction: column;
+        gap: 10px; /* Stack buttons vertically with smaller gap */
+    }
+
+    /* Dark mode toggle */
+    .dark-mode-toggle button {
+        font-size: 1.2rem; /* Smaller icon size on mobile */
+    }
+}
+
+/* For very small screens like smartphones */
+@media screen and (max-width: 480px) {
+    /* Research Title */
+    .research-title h2 {
+        font-size: 1rem; /* Even smaller title */
+    }
+
+    /* Flashcard */
+    .flashcard {
+        height: 220px; /* Even smaller height for tiny screens */
+    }
+
+    /* Font size of card text */
+    .card-front p, .card-back p {
+        font-size: 1rem; /* Smaller font size */
+    }
+
+    /* Buttons */
+    button {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
+
+    .controls {
+        gap: 8px; /* Reduced space for buttons */
+    }
+}
